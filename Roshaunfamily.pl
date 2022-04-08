@@ -20,6 +20,6 @@ mother(roshaun,anbal).
 mother(tash,anbal).
 parent(X,Y):-father(X,Y),father(S,Y),mother(X,Y),mother(S,Y).
 
-sister(X,Y):-mother(U,X),mother(U,Y),female(X),X\=Y.
+sister(X,Y):-mother(U,X),mother(U,Y),female(X).
 
-brother(X,Y):-mother(U,X),mother(U,Y),male(X),X\=Y.
+brother(X,Y):-mother(U,X),mother(U,Y),male(X).
