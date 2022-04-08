@@ -1,0 +1,32 @@
+female(Y).
+female(tash).
+female(kay).
+female(anbal).
+female(jean).
+female(caroline).
+male(X).
+male(roshaun).
+male(leigh).
+male(west).
+male(cgee).
+male(glan).
+male(hodgson). 
+parent_of(kay,anbal).
+parent_of(kay,leigh).
+parent_of(tash,anbal).
+parent_of(tash,west).
+parent_of(roshaun,anbal).
+parent_of(roshaun,leigh).
+parent_of(anbal,caroline).
+parent_of(leigh,jean).
+parent_of(anbal,glan).
+parent_of(leigh,hodgson).
+sibling(X,Y):-parent_of(Z,X),parent_of(Z,Y),not(X=Y).
+mother_of(X,Y):-parent_of(X,Y), female(X).
+father_of(X,Y):-parent_of(X,Y), male(X).
+daughter_of(X,Y):- parent_of(Y,X),female(X). 
+son_of(X,Y):- parent_of(Y,X),male(X). 
+grandmother(X,Z):- parent_of(X,Y),parent_of(Y,Z),female(X).
+grandfather(X,Z):- parent_of(X,Y),parent_of(Y,Z),male(X).
+sister(X,Y):-sibling(X,Y),female(X).
+brother(X,Y):-sibling(X,Y),male(X).
