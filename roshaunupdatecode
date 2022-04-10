@@ -4,12 +4,14 @@ female(kay).
 female(anbal).
 female(jean).
 female(caroline).
+female(catherine).
 male(X).
 male(roshaun).
 male(leigh).
 male(west).
 male(cgee).
 male(glan).
+male(cgee).
 male(hodgson). 
 parent_of(kay,anbal).
 parent_of(kay,leigh).
@@ -21,12 +23,16 @@ parent_of(anbal,caroline).
 parent_of(leigh,jean).
 parent_of(anbal,glan).
 parent_of(leigh,hodgson).
+parent_of(west,cgee).
+parent_of(west,catherine).
 sibling(X,Y):-parent_of(Z,X),parent_of(Z,Y),not(X=Y).
 mother_of(X,Y):-parent_of(X,Y), female(X).
 father_of(X,Y):-parent_of(X,Y), male(X).
 daughter_of(X,Y):- parent_of(Y,X),female(X). 
+sister(X,Y):-sibling(X,Y),female(X).
 son_of(X,Y):- parent_of(Y,X),male(X). 
 grandmother(X,Z):- parent_of(X,Y),parent_of(Y,Z),female(X).
 grandfather(X,Z):- parent_of(X,Y),parent_of(Y,Z),male(X).
-sister(X,Y):-sibling(X,Y),female(X).
 brother(X,Y):-sibling(X,Y),male(X).
+ancestor_of(X,Y):-parent_of(X,Y).
+ancestor_of(X,Y):-parent_of(X,Z),ancestor_of(Z,Y).
