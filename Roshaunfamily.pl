@@ -48,9 +48,7 @@ grandfather(X,Z):- parent_of(X,Y),parent_of(Y,Z),male(X).
 brother(X,Y):-sibling(X,Y),male(X).
 ancestor_of(X,Y):-parent_of(X,Y).
 ancestor_of(X,Y):-parent_of(X,Z),ancestor_of(Z,Y).
-family([anbal,leigh],[[kay],[roshaun]]).
-family([anbal,west],[[tash],[]]).
-member(M,[M|_]). 
+
 
        
             
