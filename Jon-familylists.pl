@@ -31,6 +31,8 @@ female(F) :- family([_], [Ds, _]), member(F, Ds).
 son_of(S, P) :- parent_of(P, S), family(_, [_, Ss]), member(S, Ss).
 daughter_of(D, P) :- parent_of(P, D), family(_, [Ds, _]), member(D, Ds).
 sibling_of(S1, S2) :- parent_of(P, S1),  parent_of(P, S2).
+brother_of(B, S) :- sibling_of(B, S), male(B).
+sister_of(S, Si) :- sibling_of(S, Si), female(S).
 grandparent_of(G, GC) :-  parent_of(G, P), parent_of(P, GC).
 great_grandparent_of(GG, GGC) :- parent_of(GG, G), grandparent_of(G, GGC).
 ancestor_of(A, D) :- parent_of(A, D) ; grandparent_of(A, D) ; great_grandparent_of(A, D).
