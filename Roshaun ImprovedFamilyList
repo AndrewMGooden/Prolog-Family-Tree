@@ -1,12 +1,10 @@
-
-%family([mom,dad],[[child1,female],[child2,male],[child3,male]]).
-family([anbal,leigh],[[kay,female],[roshaun,male],[]]).
-family([anbal,west],[[tash,female],[],[]]).
-family([caroline,glan],[[anbal,female],[],[]]).
-family([jean,hodgson],[[],[leigh,male],[]]).
-family([catherine,cgee],[[],[west,male],[]]).
-family([cynthia,smug],[[jean,female],[],[]]).
-family([ruth,james],[[],[glan,male],[]]).
+family([anbal,leigh],[[kay,female],[roshaun,male]]).
+family([anbal,west],[[tash,female]]).
+family([caroline,glan],[[anbal,female]]).
+family([jean,hodgson],[leigh,male]]).
+family([catherine,cgee],[[west,male]]).
+family([cynthia,smug],[[jean,female]]).
+family([ruth,james],[[],[glan,male]]).
 
 
 male(X).
@@ -28,11 +26,16 @@ female(catherine).
 female(ruth).
 female(cynthia).
 
-father_of(F,C):-family([_,F],Cs), member([C|_],Cs).
-mother_of(M,C):-family([_,M],Cs), member([C|_],Cs).
-parent_of(P,C):-father_of(P,C);mother_of(P,C).
-sibling_of(S1, S2) :- parent_of(P, S1),parent_of(P, S2).
+father_of(F, C) :- family([_, F], Cs), member([C|_], Cs).
+mother_of(M, C) :- family([M, _], Cs),  member([C|_], Cs).
+parent_of(P, C) :- father_of(P, C) ; mother_of(P, C).
+sibling_of(S1, S2) :- parent_of(P, S1), parent_of(P, S2).
+
 brother_of(B, S) :- sibling_of(B, S),male(B).
+sister_of(S, ST) :- sibling_of(S, ST), female(ST).
+
+oldest_son(S,P):- parent_of(P, S), family(_, Ss), male(S).
+oldest_daughter(D,P):- parent_of(P, D), family(_, Ds), on([D|_], Ds),  female(D).
 oldest_child(C,P):- parent_of(P, C), family(_, Cs), on([C|_], Cs).
 oldest_son(S,P):- parent_of(P, S), family(_, Ss), male(S).
 oldest_daughter(D,P):- parent_of(P, D), family(_, Ds), on([D|_], Ds),  female(D).
