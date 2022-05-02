@@ -15,8 +15,8 @@
 % chronological order, and the second giving the names of the sons, in chronological order.
 
 family([tile, banca], [[leonie], []]).
-family([leonie, baldwin], [[jeffrine, charlene, suzette], [phil]]).
-family([jeffrine, williamsr], [[], [williamjr]]).
+family([leonie, baldwin], [[jefferine, charlene, suzette], [phil]]).
+family([jefferine, williamsr], [[], [williamjr]]).
 family([charlene, darlston], [[], [jon]]).
 family([lacey, phil], [[zxvana, zxrai], []]).
 
