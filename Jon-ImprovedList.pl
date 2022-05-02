@@ -32,7 +32,7 @@ on(Item, [Item|_]).
 size([], 0).
 size([_|T], N) :- size(T, N1), N1 is N + 1.
 
-
+% male(B) :- family(_, Cs), (member(B|_], Cs) ; member(_|B), Cs), member(male, B).
 father_of(F, C) :- family([_, F], Cs), member([C|_], Cs).
 mother_of(M, C) :- family([M, _], Cs),  member([C|_], Cs).
 parent_of(P, C) :- father_of(P, C) ; mother_of(P, C).
