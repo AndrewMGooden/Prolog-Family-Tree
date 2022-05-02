@@ -24,6 +24,8 @@ female(F). :- family(_,Cs), member([F, female], Cs).
 father_of(F, C) :- family([_, F], Cs), member([C|_], Cs).
 mother_of(M, C) :- family([M, _], Cs),  member([C|_], Cs).
 parent_of(P, C) :- father_of(P, C) ; mother_of(P, C).
+ancestor_of(A, D) :- parent_of(A, D).
+ancestor_of(A, D) :- ancestor_of(A, M), parent_of(M, D).
 
 % Sibling Predicates
 sibling_of(S1, S2) :- parent_of(P, S1), parent_of(P, S2).
