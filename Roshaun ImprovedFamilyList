@@ -1,3 +1,16 @@
+%We have considered two representations for the family database:
+% One which represents a family in terms of three basic predicates: parent_of(), 
+%male() and female(), plus a bunch of rules. 
+%A second representation which represents a family in terms of a list with the form
+%family(ParentList, ChildrenLists). For example,
+%family([mom,dad],[[daughter1, daughter2],[son1,son2,son3]]).
+%One shortcoming of this list representation is that it doesn't represent the chronological order of all the 
+%children. You can tell who is the oldest son and who is the oldest daughter but not who is the oldest 
+%child.
+$So we now want to rewrite our database using the following representation scheme:
+%family([mom,dad],[[child1,female],[child2,male],[child3,male]]).
+
+
 family([anbal,leigh],[[kay,female],[roshaun,male]]).
 family([anbal,west],[[tash,female]]).
 family([caroline,glan],[[anbal,female]]).
@@ -6,36 +19,23 @@ family([catherine,cgee],[[west,male]]).
 family([cynthia,smug],[[jean,female]]).
 family([ruth,james],[[],[glan,male]]).
 
+%Predicates for Gender
+male(M) :- family(_, Cs), member([M, male], Cs).
+female(F). :- family(_,Cs), member([F, female], Cs).
 
-male(X).
-male(roshaun).
-male(leigh).
-male(glan).
-male(hodgson).
-male(cgee).
-male(smug).
-male(james).
-
-female(Y).
-female(anbal).
-female(tash).
-female(kay).
-female(caroline).
-female(jean).
-female(catherine).
-female(ruth).
-female(cynthia).
-
+%Parent Predicates
 father_of(F, C) :- family([_, F], Cs), member([C|_], Cs).
 mother_of(M, C) :- family([M, _], Cs),  member([C|_], Cs).
 parent_of(P, C) :- father_of(P, C) ; mother_of(P, C).
-sibling_of(S1, S2) :- parent_of(P, S1), parent_of(P, S2).
 
+%Sibling Predicates
+sibling_of(S1, S2) :- parent_of(P, S1), parent_of(P, S2).
 brother_of(B, S) :- sibling_of(B, S),male(B).
 sister_of(S, ST) :- sibling_of(S, ST), female(ST).
 
+%Children Predicates
 oldest_son(S,P):- parent_of(P, S), family(_, Ss), male(S).
 oldest_daughter(D,P):- parent_of(P, D), family(_, Ds), on([D|_], Ds),  female(D).
 oldest_child(C,P):- parent_of(P, C), family(_, Cs), on([C|_], Cs).
-oldest_son(S,P):- parent_of(P, S), family(_, Ss), male(S).
-oldest_daughter(D,P):- parent_of(P, D), family(_, Ds), on([D|_], Ds),  female(D).
+
+
