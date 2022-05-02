@@ -18,7 +18,7 @@ size([_|T], N) :- size(T, N1), N1 is N + 1.
 male(M) :- family([_, M], _).
 male(M) :- family(_, Cs), member([M, male], Cs).
 female(F) :- family([F, _] ,_).
-female(F). :- family(_,Cs), member([F, female], Cs).
+female(F) :- family(_,Cs), member([F, female], Cs).
 
 % Parentage Predicates
 father_of(F, C) :- family([_, F], Cs), member([C|_], Cs).
@@ -38,7 +38,6 @@ number_of_children(P, N) :- (family([_, P], Cs) ; family([P, _], Cs)), size(Cs, 
 
 
 
-oldest_son_of(OS, P) :- (family([_, P], Cs) ; family([P,_], Cs)), member([OS,_], Cs), selectchk([_, male], Cs, R), selectchk([OD, male], Cs, R), print(Cs), print(R).
+oldest_son_of(OS, P) :- (family([_, P], Cs) ; family([P,_], Cs)), member([OS,_], Cs), selectchk([_, male], Cs, R), selectchk([OS, male], Cs, R), print(Cs), print(R).
 oldest_daughter_of(OD, P) :- (family([_, P], Cs) ; family([P,_], Cs)), member([OD,_], Cs), selectchk([_, female], Cs, R), selectchk([OD, female], Cs, R), print(Cs), print(R).
-
 
