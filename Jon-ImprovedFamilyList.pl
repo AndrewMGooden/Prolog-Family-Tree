@@ -12,7 +12,7 @@ family([lacey, phil], [[zxvana, female], [zxrai, female]]).
 
 on(Item, [Item|_]).
 size([], 0).
-size([_|T], N) :- size(T, N1), N1 is N + 1.
+size([_|T], N) :- size(T, N1), N is N1 + 1.
 
 % Gender Predicates
 male(M) :- family([_, M], _).
