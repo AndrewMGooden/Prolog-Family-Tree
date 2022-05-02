@@ -6,7 +6,6 @@
 % Online compiler https://swish.swi-prolog.org/
 
 % Gender declarations
-male(_X).
 male(banca).
 male(phil).
 male(jon).
@@ -15,7 +14,6 @@ male(williamsr).
 male(williamjr).
 male(darlston).
 
-female(_Y).
 female(suzette).
 female(jefferine).
 female(charlene).
@@ -47,20 +45,26 @@ parent_of(tile, leonie).
 parent_of(banca, leonie).
 
 % Parentage Predicates
+    % Determined via a combination of parent and gender facts.
 father_of(X, Y) :- parent_of(X, Y), male(X).
 mother_of(X, Y) :- parent_of(X, Y), female(X).
-grandmother(X, Z):- parent_of(X, Y), parent_of(Y, Z), female(X).
-grandfather(X, Z):- parent_of(X, Y), parent_of(Y, Z), male(X).
+    % Determined if grandparent's child is the grandchild's parent
+    % and then checks the gender fact
+grandmother_of(X, Z):- parent_of(X, Y), parent_of(Y, Z), female(X).
+grandfather_of(X, Z):- parent_of(X, Y), parent_of(Y, Z), male(X).
+    % Recusively determines parenthood to  the nth degree.
 ancestor_of(X, Y):- parent_of(X, Y).
 ancestor_of(X, Y):- parent_of(X, Z), ancestor_of(Z, Y).
 
 % Sibling predicates
-sister_of(X, Y):- sibling(X, Y), female(X).
+    % Determines siblinghood if a parent is shared.
 sibling_of(X,Y):- parent_of(Z, X), parent_of(Z, Y), not(X = Y).
-brother(X, Y):- sibling(X, Y), male(X).
+    % Determines type of siblinghood based on sibling and
+    % gender predicates
+sister_of(X, Y):- sibling_of(X, Y), female(X).
+brother_of(X, Y):- sibling_of(X, Y), male(X).
+
 
 % Child Predicates
 daughter_of(X, Y):- parent_of(Y, X),female(X). 
 son_of(X, Y):- parent_of(Y, X), male(X). 
-
-
