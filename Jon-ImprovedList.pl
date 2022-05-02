@@ -37,5 +37,4 @@ number_of_children(P, N) :- (family([_, P], Cs) ; family([P, _], Cs)), size(Cs, 
 oldest_son_of(OS, P) :- (family([_, P], Cs) ; family([P,_], Cs)), member([OS,_], Cs), selectchk([_, male], Cs, R), selectchk([OD, male], Cs, R), print(Cs), print(R).
 oldest_daughter_of(OD, P) :- (family([_, P], Cs) ; family([P,_], Cs)), member([OD,_], Cs), selectchk([_, female], Cs, R), selectchk([OD, female], Cs, R), print(Cs), print(R).
 
-daughters_of(P) :- (family([_, P], Cs) ; family([P,_], Cs)), subtract(Cs, female(_), R), print(R).
 
