@@ -10,35 +10,25 @@ family([jefferine, williamsr], [[williamjr, male]]).
 family([charlene, darlston], [[jon, male]]).
 family([lacey, phil], [[zxvana, female], [zxrai, female]]).
 
-male(_X).
-male(banca).
-male(phil).
-male(jon).
-male(baldwin).
-male(williamsr).
-male(williamjr).
-male(darlston).
-female(_Y).
-female(suzette).
-female(jefferine).
-female(charlene).
-female(leonie).
-female(zxvana).
-female(zxrai).
-female(lacey).
-female(tile).
-
 on(Item, [Item|_]).
 size([], 0).
 size([_|T], N) :- size(T, N1), N1 is N + 1.
 
-% male(B) :- family(_, Cs), (member(B|_], Cs) ; member(_|B), Cs), member(male, B).
+% Gender Predicates
+male(M) :- family(_, Cs), member([M, male], Cs).
+female(F). :- family(_,Cs), member([F, female], Cs).
+
+% Parentage Predicates
 father_of(F, C) :- family([_, F], Cs), member([C|_], Cs).
 mother_of(M, C) :- family([M, _], Cs),  member([C|_], Cs).
 parent_of(P, C) :- father_of(P, C) ; mother_of(P, C).
+
+% Sibling Predicates
 sibling_of(S1, S2) :- parent_of(P, S1), parent_of(P, S2).
 brother_of(B, S) :- sibling_of(B, S) , male(B).
 sister_of(S, Si) :- sibling_of(S, Si), female(Si).
+
+% Child Predicates
 oldest_child_of(C, P) :- parent_of(P, C), family(_, Cs), on([C|_], Cs).
 number_of_children(P, N) :- (family([_, P], Cs) ; family([P, _], Cs)), size(Cs, N).
 
