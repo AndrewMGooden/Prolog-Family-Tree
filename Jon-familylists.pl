@@ -20,21 +20,30 @@ family([jefferine, williamsr], [[], [williamjr]]).
 family([charlene, darlston], [[], [jon]]).
 family([lacey, phil], [[zxvana, zxrai], []]).
 
+% Parentage Predicates
 father_of(D, C) :- family([_, D], [Ds, Ss]), (member(C, Ds) ; member(C, Ss)).
 mother_of(M, C) :- family([M, _], [Ds, Ss]), (member(C, Ds) ; member(C, Ss)).
 parent_of(P, C) :- father_of(P, C).
 parent_of(P, C) :- mother_of(P, C).
+grandparent_of(G, GC) :-  parent_of(G, P), parent_of(P, GC).
+great_grandparent_of(GG, GGC) :- parent_of(GG, G), grandparent_of(G, GGC).
+ancestor_of(A, D) :- parent_of(A, D) ; grandparent_of(A, D) ; great_grandparent_of(A, D).
+
+% Gender Predicates
 male(M) :- family([_, M], _).
 male(M) :- family(_, [_, Ss]), member(M, Ss).
 female(F) :- family([F, _], _).
 female(F) :- family([_], [Ds, _]), member(F, Ds).
+
+% Child Predicates
 son_of(S, P) :- parent_of(P, S), family(_, [_, Ss]), member(S, Ss).
 daughter_of(D, P) :- parent_of(P, D), family(_, [Ds, _]), member(D, Ds).
+oldest_son_of(OS, P) :- parent_of(P, OS), family(_, [_, [H|_]]), OS = H.
+oldest_daughter_of(OD, P) :- parent_of(P, OD), family(_, [[H|_], _]), OD = H.
+
+% Sibling Predicates
 sibling_of(S1, S2) :- parent_of(P, S1),  parent_of(P, S2).
 brother_of(B, S) :- sibling_of(B, S), male(B).
 sister_of(S, Si) :- sibling_of(S, Si), female(S).
-grandparent_of(G, GC) :-  parent_of(G, P), parent_of(P, GC).
-great_grandparent_of(GG, GGC) :- parent_of(GG, G), grandparent_of(G, GGC).
-ancestor_of(A, D) :- parent_of(A, D) ; grandparent_of(A, D) ; great_grandparent_of(A, D).
-oldest_son_of(OS, P) :- parent_of(P, OS), family(_, [_, [H|T]]), OS = H.
-oldest_daughter_of(OD, P) :- parent_of(P, OD), family(_, [[H|T], _]), OD = H.
+
+
