@@ -15,7 +15,9 @@ size([], 0).
 size([_|T], N) :- size(T, N1), N1 is N + 1.
 
 % Gender Predicates
+male(M) :- family([_, M], _).
 male(M) :- family(_, Cs), member([M, male], Cs).
+female(F) :- family([F, _] ,_).
 female(F). :- family(_,Cs), member([F, female], Cs).
 
 % Parentage Predicates
