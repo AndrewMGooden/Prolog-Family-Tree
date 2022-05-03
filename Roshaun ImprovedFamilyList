@@ -19,23 +19,47 @@ family([catherine,cgee],[[west,male]]).
 family([cynthia,smug],[[jean,female]]).
 family([ruth,james],[[],[glan,male]]).
 
+
 %Predicates for Gender
+% CHecks for gender based on position in parent list. 
 male(M) :- family(_, Cs), member([M, male], Cs).
 female(F). :- family(_,Cs), member([F, female], Cs).
 
+%Determines gender based on name,gender format of the child list. 
+male(M) :- family(_, Cs), member([M, male], Cs). 
+female(F) :- family(_,Cs), member([F, female], Cs).
+
 %Parent Predicates
+ %Determines parentage based on rank of parent in the 
+ %parent list and presece of the child in the child list., 
 father_of(F, C) :- family([_, F], Cs), member([C|_], Cs).
 mother_of(M, C) :- family([M, _], Cs),  member([C|_], Cs).
+
+%Determines parent based on mother and father predicates. 
 parent_of(P, C) :- father_of(P, C) ; mother_of(P, C).
 
 %Sibling Predicates
+%Provides sibling if parent is shared. 
 sibling_of(S1, S2) :- parent_of(P, S1), parent_of(P, S2).
+
+%Determines sibling type based on sibling predicate and 
+%gender predicate.
 brother_of(B, S) :- sibling_of(B, S),male(B).
 sister_of(S, ST) :- sibling_of(S, ST), female(ST).
 
 %Children Predicates
-oldest_son(S,P):- parent_of(P, S), family(_, Ss), male(S).
-oldest_daughter(D,P):- parent_of(P, D), family(_, Ds), on([D|_], Ds),  female(D).
-oldest_child(C,P):- parent_of(P, C), family(_, Cs), on([C|_], Cs).
+%Check of primacy by removing first child of a particular gender from list
+%and compare to new and old list.
+oldest_son(SO,P):- (family([_, P], Cs) ; family([P,_], Cs)), member([SO,_], Cs), selectchk([_, male], Cs, R), selectchk([SO, male], Cs, R), print(Cs), print(R).
+oldest_daughter(D,P):- (family([_, P], Cs) ; family([P,_], Cs)), member([D,_], Cs), selectchk([_, female], Cs, R), selectchk([D, female], Cs, R), print(Cs), print(R).
 
+%Checks for oldest child through head of child list.
+oldest_child(C,P):-parent_of(P, C), family(_, Cs), on([C|_], Cs).
+
+%Checks size of children list
+number_of_children(P, N) :- (family([_, P], Cs) ; family([P, _], Cs)), size(Cs, N).
+
+%Checks for size of parent list in terms of daughters and sons.
+number_of_daughters(P, L) :- aggregate(count, daughter_of(_X, P), Y), L is Y+1.
+number_of_sons(P, L) :- aggregate(count, son_of(_X, P),Y), L is Y+1.
 
