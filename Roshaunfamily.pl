@@ -29,7 +29,7 @@ female(tash).
 female(kay).
 
 %Declaration of Parents
-
+parent_of(_X, _Y).
 parent_of(jean,smug).
 parent_of(jean,cynthia).
 parent_of(glan,james).
@@ -65,11 +65,11 @@ ancestor_of(X,Y):-parent_of(X,Z),ancestor_of(Z,Y).
 %Sibling Predicates
 
 %Determines sibling if parent is shared.
-sibling(X,Y):-parent_of(Z,X),parent_of(Z,Y),not(X = Y).
+sibling_of(X,Y):-parent_of(Z,X),parent_of(Z,Y),not(X = Y).
 
 %Determines sibling type based on gender and sibling predicates. 
-sister(X,Y):-sibling(X,Y),female(X).
-brother(X,Y):-sibling(X,Y),male(X).
+sister_of(X,Y):-sibling_of(X,Y),female(X).
+brother_of(X,Y):-sibling_of(X,Y),male(X).
 
 %Determines child type based on gender and parent predicates
 daughter_of(X,Y):- parent_of(Y,X),female(X). 
