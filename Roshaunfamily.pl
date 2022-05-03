@@ -3,7 +3,7 @@
 %Your program should implement the following facts for your immediate family, grandparents, and 
 %great-grandparents.
 
-%Gender Declarations
+%Compiler:https://swish.swi-prolog.org/
 
 %Gender Declarations
 
@@ -28,10 +28,6 @@ female(anbal).
 female(tash).
 female(kay).
 
-
-
-
-
 %Declaration of Parents
 
 parent_of(jean,smug).
@@ -53,17 +49,33 @@ parent_of(roshaun,leigh).
  
 
 %Predicates
+%Determine father and mother predicates through combination of gender and parent facts.
 father_of(X,Y):-parent_of(X,Y), male(X).
 mother_of(X,Y):-parent_of(X,Y), female(X).
-sibling(X,Y):-parent_of(Z,X),parent_of(Z,Y),not(X = Y).
-sister(X,Y):-sibling(X,Y),female(X).
-daughter_of(X,Y):- parent_of(Y,X),female(X). 
-son_of(X,Y):- parent_of(Y,X),male(X). 
+
+%Determines grandparent by checking if grandparent is parent of parent and checks. 
+%gender fact.
 grandmother(X,Z):- parent_of(X,Y),parent_of(Y,Z),female(X).
 grandfather(X,Z):- parent_of(X,Y),parent_of(Y,Z),male(X).
-brother(X,Y):-sibling(X,Y),male(X).
+
+%Determines parenthood to the nth degreee
 ancestor_of(X,Y):-parent_of(X,Y).
 ancestor_of(X,Y):-parent_of(X,Z),ancestor_of(Z,Y).
+
+%Sibling Predicates
+
+%Determines sibling if parent is shared.
+sibling(X,Y):-parent_of(Z,X),parent_of(Z,Y),not(X = Y).
+
+%Determines sibling type based on gender and sibling predicates. 
+sister(X,Y):-sibling(X,Y),female(X).
+brother(X,Y):-sibling(X,Y),male(X).
+
+%Determines child type based on gender and parent predicates
+daughter_of(X,Y):- parent_of(Y,X),female(X). 
+son_of(X,Y):- parent_of(Y,X),male(X). 
+
+
 
 
        
