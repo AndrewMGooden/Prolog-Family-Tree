@@ -53,7 +53,7 @@ parent_of(roshaun,leigh).
 father_of(X,Y):-parent_of(X,Y), male(X).
 mother_of(X,Y):-parent_of(X,Y), female(X).
 
-%Determines grandparent by checking if grandparent is parent of parent and checks. 
+%Determines grandparent by checking if grandparent is parent of parent and checks
 %gender fact.
 grandmother(X,Z):- parent_of(X,Y),parent_of(Y,Z),female(X).
 grandfather(X,Z):- parent_of(X,Y),parent_of(Y,Z),male(X).
@@ -71,7 +71,7 @@ sibling_of(X,Y):-parent_of(Z,X),parent_of(Z,Y),not(X = Y).
 sister_of(X,Y):-sibling_of(X,Y),female(X).
 brother_of(X,Y):-sibling_of(X,Y),male(X).
 
-%Determines child type based on gender and parent predicates
+%Determines child type based on gender and parent predicates.
 daughter_of(X,Y):- parent_of(Y,X),female(X). 
 son_of(X,Y):- parent_of(Y,X),male(X). 
 
