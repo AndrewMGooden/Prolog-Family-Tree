@@ -39,7 +39,7 @@ ancestor_of(L,D):- ancestor_of(L, M),parent_of(M, D).
 
 %Gender Predicates
 
-%Determines gender based on poistion in parent list or son/daughter's 
+%Determines gender based on position in parent list or son/daughter's 
 %list. 
 male(M) :- family([_,M],_).
 male(M) :- family(_,[_,Ss]), member(M,Ss).
