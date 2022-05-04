@@ -25,7 +25,8 @@ size([], 0).
 size([_|T], N) :- size(T, N1), N is N1 + 1.
 
 %Determines gender based on name,gender format of the child list. 
-
+male(M) :- family(_, Cs), member([M, male], Cs). 
+female(F) :- family(_,Cs), member([F, female], Cs).
 
 %Predicates for Gender
 %CHecks for gender based on position in parent list
